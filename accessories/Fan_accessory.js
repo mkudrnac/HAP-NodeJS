@@ -4,8 +4,38 @@ var Characteristic = require('../').Characteristic;
 var uuid = require('../').uuid;
 var gpio = require('rpi-gpio');
 
+SPEED_1_PIN = 7;
+SPEED_2_PIN = 11;
+SPEED_3_PIN = 12;
+
 gpio.setMode(gpio.MODE_RPI);
-gpio.setup(7, gpio.DIR_OUT);
+gpio.setup(SPEED_1_PIN, gpio.DIR_OUT);
+gpio.setup(SPEED_2_PIN, gpio.DIR_OUT);
+gpio.setup(SPEED_3_PIN, gpio.DIR_OUT);
+
+function shutdown() {
+  gpio.write(SPEED_1_PIN, false);
+  gpio.write(SPEED_2_PIN, false);
+  gpio.write(SPEED_3_PIN, false);
+}
+
+function setSpeed1() {
+  gpio.write(SPEED_1_PIN, true);
+  gpio.write(SPEED_2_PIN, false);
+  gpio.write(SPEED_3_PIN, false);
+}
+
+function setSpeed2() {
+  gpio.write(SPEED_1_PIN, false);
+  gpio.write(SPEED_2_PIN, true);
+  gpio.write(SPEED_3_PIN, false);
+}
+
+function setSpeed3() {
+  gpio.write(SPEED_1_PIN, false);
+  gpio.write(SPEED_2_PIN, false);
+  gpio.write(SPEED_3_PIN, true);
+}
 
 // here's a fake hardware device that we'll expose to HomeKit
 var FAKE_FAN = {
@@ -15,17 +45,27 @@ var FAKE_FAN = {
     if(on){
       //put your code here to turn on the fan
       FAKE_FAN.powerOn = on;
+      setSpeed1();
     }
     else{
       //put your code here to turn off the fan
       FAKE_FAN.powerOn = on;
+      shutdown();
     }
   },
   setSpeed: function(value) {
     console.log("Setting fan rSpeed to %s", value);
     FAKE_FAN.rSpeed = value;
     //put your code here to set the fan to a specific value
-    gpio.write(7, true);
+    if(value === 0) {
+      shutdown();
+    } else if(value <= 33) {
+      setSpeed1();
+    } else if(value > 33 && value < 66) {
+      setSpeed2();
+    } else {
+      setSpeed3();
+    }
   },
   identify: function() {
     //put your code here to identify the fan
