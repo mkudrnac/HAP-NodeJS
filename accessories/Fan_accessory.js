@@ -2,7 +2,10 @@ var Accessory = require('../').Accessory;
 var Service = require('../').Service;
 var Characteristic = require('../').Characteristic;
 var uuid = require('../').uuid;
+var gpio = require('rpi-gpio');
 
+gpio.setMode(gpio.MODE_RPI);
+gpio.setup(7, gpio.DIR_OUT);
 
 // here's a fake hardware device that we'll expose to HomeKit
 var FAKE_FAN = {
@@ -22,12 +25,13 @@ var FAKE_FAN = {
     console.log("Setting fan rSpeed to %s", value);
     FAKE_FAN.rSpeed = value;
     //put your code here to set the fan to a specific value
+    gpio.write(7, true);
   },
   identify: function() {
     //put your code here to identify the fan
     console.log("Fan Identified!");
   }
-}
+};
 
 // This is the Accessory that we'll return to HAP-NodeJS that represents our fake fan.
 var fan = exports.accessory = new Accessory('Fan', uuid.generate('hap-nodejs:accessories:Fan'));
@@ -88,4 +92,4 @@ fan
   .on('set', function(value, callback) {
     FAKE_FAN.setSpeed(value);
     callback();
-  })
+  });
