@@ -2,87 +2,34 @@ var Accessory = require('../').Accessory;
 var Service = require('../').Service;
 var Characteristic = require('../').Characteristic;
 var uuid = require('../').uuid;
-var gpio = require('rpi-gpio');
-var async = require('async');
+var Gpio = require('onoff').Gpio;
 
-SPEED_1_PIN = 7;
-SPEED_2_PIN = 11;
-SPEED_3_PIN = 12;
-
-gpio.setMode(gpio.MODE_RPI);
-gpio.setup(SPEED_1_PIN, gpio.DIR_OUT);
-gpio.setup(SPEED_2_PIN, gpio.DIR_OUT);
-gpio.setup(SPEED_3_PIN, gpio.DIR_OUT);
-
-async.parallel([
-  function(callback) {
-    gpio.setup(SPEED_1_PIN, gpio.DIR_OUT, callback)
-  },
-  function(callback) {
-    gpio.setup(SPEED_2_PIN, gpio.DIR_OUT, callback)
-  },
-  function(callback) {
-    gpio.setup(SPEED_3_PIN, gpio.DIR_OUT, callback)
-  }
-], function(err, results) {
-  console.log('Pins set up');
-});
-
+speed1 = new Gpio(4, 'out');
+speed2 = new Gpio(17, 'out');
+speed3 = new Gpio(18, 'out');
 
 function shutdown() {
-  async.series([
-    function(callback) {
-      gpio.write(SPEED_1_PIN, false, callback);
-    },
-    function(callback) {
-      gpio.write(SPEED_2_PIN, false, callback);
-    },
-    function(callback) {
-      gpio.write(SPEED_3_PIN, false, callback);
-    }
-  ]);
+  speed1.writeSync(false);
+  speed2.writeSync(false);
+  speed3.writeSync(false);
 }
 
 function setSpeed1() {
-  async.series([
-    function(callback) {
-      gpio.write(SPEED_1_PIN, true, callback);
-    },
-    function(callback) {
-      gpio.write(SPEED_2_PIN, false, callback);
-    },
-    function(callback) {
-      gpio.write(SPEED_3_PIN, false, callback);
-    }
-  ]);
+  speed1.writeSync(false);
+  speed2.writeSync(false);
+  speed3.writeSync(false);
 }
 
 function setSpeed2() {
-  async.series([
-    function(callback) {
-      gpio.write(SPEED_1_PIN, false, callback);
-    },
-    function(callback) {
-      gpio.write(SPEED_2_PIN, true, callback);
-    },
-    function(callback) {
-      gpio.write(SPEED_3_PIN, false, callback);
-    }
-  ]);
+  speed1.writeSync(false);
+  speed2.writeSync(false);
+  speed3.writeSync(false);
 }
 
 function setSpeed3() {
-  async.series([
-    function(callback) {
-      gpio.write(SPEED_1_PIN, false, callback);
-    },
-    function(callback) {
-      gpio.write(SPEED_2_PIN, false, callback);
-    },
-    function(callback) {
-      gpio.write(SPEED_3_PIN, true, callback);
-    }
-  ]);
+  speed1.writeSync(false);
+  speed2.writeSync(false);
+  speed3.writeSync(false);
 }
 
 // here's a fake hardware device that we'll expose to HomeKit
