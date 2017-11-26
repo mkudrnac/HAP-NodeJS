@@ -4,48 +4,21 @@ var Characteristic = require('../').Characteristic;
 var uuid = require('../').uuid;
 var Gpio = require('onoff').Gpio;
 
-speed1 = new Gpio(4, 'out');
-speed2 = new Gpio(17, 'out');
-speed3 = new Gpio(18, 'out');
-
-function shutdown() {
-  speed1.writeSync(0);
-  speed2.writeSync(0);
-  speed3.writeSync(0);
-}
-
-function setSpeed1() {
-  speed1.writeSync(1);
-  speed2.writeSync(0);
-  speed3.writeSync(0);
-}
-
-function setSpeed2() {
-  speed1.writeSync(0);
-  speed2.writeSync(1);
-  speed3.writeSync(0);
-}
-
-function setSpeed3() {
-  speed1.writeSync(0);
-  speed2.writeSync(0);
-  speed3.writeSync(1);
-}
-
 // here's a fake hardware device that we'll expose to HomeKit
 var FAKE_FAN = {
+  speed1: new Gpio(4, 'out'),
+  speed2: new Gpio(17, 'out'),
+  speed3: new Gpio(18, 'out'),
   powerOn: false,
   rSpeed: 100,
   setPowerOn: function(on) {
     if(on){
       //put your code here to turn on the fan
       FAKE_FAN.powerOn = on;
-      setSpeed1();
     }
     else{
       //put your code here to turn off the fan
       FAKE_FAN.powerOn = on;
-      shutdown();
     }
   },
   setSpeed: function(value) {
@@ -54,9 +27,9 @@ var FAKE_FAN = {
     //put your code here to set the fan to a specific value
     if(value === 0) {
       shutdown();
-    } else if(value < 33) {
+    } else if(value <= 33) {
       setSpeed1();
-    } else if(value >= 33 && value < 66) {
+    } else if(value > 33 && value <= 66) {
       setSpeed2();
     } else {
       setSpeed3();
@@ -65,6 +38,26 @@ var FAKE_FAN = {
   identify: function() {
     //put your code here to identify the fan
     console.log("Fan Identified!");
+  },
+  shutdown: function() {
+    speed1.writeSync(0);
+    speed2.writeSync(0);
+    speed3.writeSync(0);
+  },
+  setSpeed1: function() {
+    speed1.writeSync(1);
+    speed2.writeSync(0);
+    speed3.writeSync(0);
+  },
+  setSpeed2: function() {
+    speed1.writeSync(0);
+    speed2.writeSync(1);
+    speed3.writeSync(0);
+  },
+  setSpeed3: function() {
+    speed1.writeSync(0);
+    speed2.writeSync(0);
+    speed3.writeSync(1);
   }
 };
 
