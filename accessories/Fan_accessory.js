@@ -9,27 +9,27 @@ speed2 = new Gpio(17, 'out');
 speed3 = new Gpio(18, 'out');
 
 function shutdown() {
-  speed1.writeSync(false);
-  speed2.writeSync(false);
-  speed3.writeSync(false);
+  speed1.writeSync(0);
+  speed2.writeSync(0);
+  speed3.writeSync(0);
 }
 
 function setSpeed1() {
-  speed1.writeSync(false);
-  speed2.writeSync(false);
-  speed3.writeSync(false);
+  speed1.writeSync(1);
+  speed2.writeSync(0);
+  speed3.writeSync(0);
 }
 
 function setSpeed2() {
-  speed1.writeSync(false);
-  speed2.writeSync(false);
-  speed3.writeSync(false);
+  speed1.writeSync(0);
+  speed2.writeSync(1);
+  speed3.writeSync(0);
 }
 
 function setSpeed3() {
-  speed1.writeSync(false);
-  speed2.writeSync(false);
-  speed3.writeSync(false);
+  speed1.writeSync(0);
+  speed2.writeSync(0);
+  speed3.writeSync(1);
 }
 
 // here's a fake hardware device that we'll expose to HomeKit
