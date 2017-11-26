@@ -5,7 +5,7 @@ var uuid = require('../').uuid;
 var Gpio = require('onoff').Gpio;
 
 // here's a fake hardware device that we'll expose to HomeKit
-var FAKE_FAN = {
+var FAN = {
   speed1: new Gpio(4, 'out'),
   speed2: new Gpio(17, 'out'),
   speed3: new Gpio(18, 'out'),
@@ -14,25 +14,25 @@ var FAKE_FAN = {
   setPowerOn: function(on) {
     if(on){
       //put your code here to turn on the fan
-      FAKE_FAN.powerOn = on;
+      FAN.powerOn = on;
     }
     else{
       //put your code here to turn off the fan
-      FAKE_FAN.powerOn = on;
+      FAN.powerOn = on;
     }
   },
   setSpeed: function(value) {
     console.log("Setting fan rSpeed to %s", value);
-    FAKE_FAN.rSpeed = value;
+    FAN.rSpeed = value;
     //put your code here to set the fan to a specific value
     if(value === 0) {
-      FAKE_FAN.shutdown();
+      FAN.shutdown();
     } else if(value <= 33) {
-      FAKE_FAN.setSpeed1();
+      FAN.setSpeed1();
     } else if(value > 33 && value <= 66) {
-      FAKE_FAN.setSpeed2();
+      FAN.setSpeed2();
     } else {
-      FAKE_FAN.setSpeed3();
+      FAN.setSpeed3();
     }
   },
   identify: function() {
@@ -40,24 +40,24 @@ var FAKE_FAN = {
     console.log("Fan Identified!");
   },
   shutdown: function() {
-    FAKE_FAN.speed1.writeSync(0);
-    FAKE_FAN.speed2.writeSync(0);
-    FAKE_FAN.speed3.writeSync(0);
+    FAN.speed1.writeSync(0);
+    FAN.speed2.writeSync(0);
+    FAN.speed3.writeSync(0);
   },
   setSpeed1: function() {
-    FAKE_FAN.speed1.writeSync(1);
-    FAKE_FAN.speed2.writeSync(0);
-    FAKE_FAN.speed3.writeSync(0);
+    FAN.speed1.writeSync(1);
+    FAN.speed2.writeSync(0);
+    FAN.speed3.writeSync(0);
   },
   setSpeed2: function() {
-    FAKE_FAN.speed1.writeSync(0);
-    FAKE_FAN.speed2.writeSync(1);
-    FAKE_FAN.speed3.writeSync(0);
+    FAN.speed1.writeSync(0);
+    FAN.speed2.writeSync(1);
+    FAN.speed3.writeSync(0);
   },
   setSpeed3: function() {
-    FAKE_FAN.speed1.writeSync(0);
-    FAKE_FAN.speed2.writeSync(0);
-    FAKE_FAN.speed3.writeSync(1);
+    FAN.speed1.writeSync(0);
+    FAN.speed2.writeSync(0);
+    FAN.speed3.writeSync(1);
   }
 };
 
@@ -75,7 +75,7 @@ fan
 
 // listen for the "identify" event for this Accessory
 fan.on('identify', function(paired, callback) {
-  FAKE_FAN.identify();
+  FAN.identify();
   callback(); // success
 });
 
@@ -85,7 +85,7 @@ fan
   .addService(Service.Fan, "Fan") // services exposed to the user should have "names" like "Fake Light" for us
   .getCharacteristic(Characteristic.On)
   .on('set', function(value, callback) {
-    FAKE_FAN.setPowerOn(value);
+    FAN.setPowerOn(value);
     callback(); // Our fake Fan is synchronous - this value has been successfully set
   });
 
@@ -102,7 +102,7 @@ fan
 
     var err = null; // in case there were any problems
 
-    if (FAKE_FAN.powerOn) {
+    if (FAN.powerOn) {
       callback(err, true);
     }
     else {
@@ -115,9 +115,9 @@ fan
   .getService(Service.Fan)
   .addCharacteristic(Characteristic.RotationSpeed)
   .on('get', function(callback) {
-    callback(null, FAKE_FAN.rSpeed);
+    callback(null, FAN.rSpeed);
   })
   .on('set', function(value, callback) {
-    FAKE_FAN.setSpeed(value);
+    FAN.setSpeed(value);
     callback();
   });
