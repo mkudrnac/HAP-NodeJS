@@ -54,9 +54,9 @@ var FAKE_FAN = {
     //put your code here to set the fan to a specific value
     if(value === 0) {
       shutdown();
-    } else if(value <= 33) {
+    } else if(value < 33) {
       setSpeed1();
-    } else if(value > 33 && value < 66) {
+    } else if(value >= 33 && value < 66) {
       setSpeed2();
     } else {
       setSpeed3();
