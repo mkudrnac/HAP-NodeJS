@@ -26,13 +26,13 @@ var FAKE_FAN = {
     FAKE_FAN.rSpeed = value;
     //put your code here to set the fan to a specific value
     if(value === 0) {
-      shutdown();
+      FAKE_FAN.shutdown();
     } else if(value <= 33) {
-      setSpeed1();
+      FAKE_FAN.setSpeed1();
     } else if(value > 33 && value <= 66) {
-      setSpeed2();
+      FAKE_FAN.setSpeed2();
     } else {
-      setSpeed3();
+      FAKE_FAN.setSpeed3();
     }
   },
   identify: function() {
@@ -40,24 +40,24 @@ var FAKE_FAN = {
     console.log("Fan Identified!");
   },
   shutdown: function() {
-    speed1.writeSync(0);
-    speed2.writeSync(0);
-    speed3.writeSync(0);
+    FAKE_FAN.speed1.writeSync(0);
+    FAKE_FAN.speed2.writeSync(0);
+    FAKE_FAN.speed3.writeSync(0);
   },
   setSpeed1: function() {
-    speed1.writeSync(1);
-    speed2.writeSync(0);
-    speed3.writeSync(0);
+    FAKE_FAN.speed1.writeSync(1);
+    FAKE_FAN.speed2.writeSync(0);
+    FAKE_FAN.speed3.writeSync(0);
   },
   setSpeed2: function() {
-    speed1.writeSync(0);
-    speed2.writeSync(1);
-    speed3.writeSync(0);
+    FAKE_FAN.speed1.writeSync(0);
+    FAKE_FAN.speed2.writeSync(1);
+    FAKE_FAN.speed3.writeSync(0);
   },
   setSpeed3: function() {
-    speed1.writeSync(0);
-    speed2.writeSync(0);
-    speed3.writeSync(1);
+    FAKE_FAN.speed1.writeSync(0);
+    FAKE_FAN.speed2.writeSync(0);
+    FAKE_FAN.speed3.writeSync(1);
   }
 };
 
