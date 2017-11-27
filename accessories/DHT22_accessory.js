@@ -10,7 +10,7 @@ var DHT22_SENSOR = {
   currentTemperature: 0,
   currentHumidity: 0,
   readSensorValues: function () {
-    var readout = dht.read();
+    var readout = DHT22_SENSOR.dht.read();
     DHT22_SENSOR.currentTemperature = readout.temperature.toFixed(2);
     DHT22_SENSOR.currentHumidity = readout.humidity.toFixed(2);
   },
