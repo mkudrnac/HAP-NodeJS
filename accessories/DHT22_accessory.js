@@ -15,12 +15,14 @@ var DHT22_SENSOR = {
     DHT22_SENSOR.currentHumidity = readout.humidity.toFixed(2);
   },
   getTemperature: function() {
-    console.log("Getting the current temperature!");
-    return DHT22_SENSOR.currentTemperature;
+    var temp = DHT22_SENSOR.currentTemperature;
+    console.log("Getting the current temperature: %f", temp);
+    return temp;
   },
-  getHumudity: function () {
-    console.log("Getting the current humidity!");
-    return DHT22_SENSOR.currentHumidity;
+  getHumidity: function () {
+    var humidity = DHT22_SENSOR.currentHumidity;
+    console.log("Getting the current humidity: %f", humidity);
+    return humidity;
   }
 };
 
@@ -52,7 +54,7 @@ sensor
   .getCharacteristic(Characteristic.CurrentRelativeHumidity)
   .on('get', function(callbak) {
     // return our current humidity value
-    callbak(null, DHT22_SENSOR.getHumudity());
+    callbak(null, DHT22_SENSOR.getHumidity());
   });
 
 // randomize our temperature reading every 3 seconds
@@ -68,6 +70,6 @@ setInterval(function() {
 
   sensor
     .getService(Service.HumiditySensor)
-    .setCharacteristic(Characteristic.CurrentRelativeHumidity, DHT22_SENSOR.getHumudity());
+    .setCharacteristic(Characteristic.CurrentRelativeHumidity, DHT22_SENSOR.getHumidity());
 
 }, 3000);
