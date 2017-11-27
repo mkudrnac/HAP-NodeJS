@@ -14,12 +14,12 @@ var FAN = {
   setPowerOn: function(on) {
     if(on) {
       //put your code here to turn on the fan
-      FAN.powerOn = on;
-      FAN.setSpeed(FAN.rSpeed);
+      this.powerOn = on;
+      this.setSpeed(FAN.rSpeed);
     } else {
       //put your code here to turn off the fan
-      FAN.powerOn = on;
-      FAN.shutdown();
+      this.powerOn = on;
+      this.shutdown();
     }
   },
   setSpeed: function(value) {
@@ -27,13 +27,13 @@ var FAN = {
     FAN.rSpeed = value;
     //put your code here to set the fan to a specific value
     if(value === 0) {
-      FAN.shutdown();
+      this.shutdown();
     } else if(value <= 33) {
-      FAN.setSpeed1();
+      this.setSpeed1();
     } else if(value > 33 && value <= 66) {
-      FAN.setSpeed2();
+      this.setSpeed2();
     } else {
-      FAN.setSpeed3();
+      this.setSpeed3();
     }
   },
   identify: function() {
@@ -41,24 +41,24 @@ var FAN = {
     console.log("Fan Identified!");
   },
   shutdown: function() {
-    FAN.speed1.writeSync(0);
-    FAN.speed2.writeSync(0);
-    FAN.speed3.writeSync(0);
+    this.speed1.writeSync(0);
+    this.speed2.writeSync(0);
+    this.speed3.writeSync(0);
   },
   setSpeed1: function() {
-    FAN.speed1.writeSync(1);
-    FAN.speed2.writeSync(0);
-    FAN.speed3.writeSync(0);
+    this.speed1.writeSync(1);
+    this.speed2.writeSync(0);
+    this.speed3.writeSync(0);
   },
   setSpeed2: function() {
-    FAN.speed1.writeSync(0);
-    FAN.speed2.writeSync(1);
-    FAN.speed3.writeSync(0);
+    this.speed1.writeSync(0);
+    this.speed2.writeSync(1);
+    this.speed3.writeSync(0);
   },
   setSpeed3: function() {
-    FAN.speed1.writeSync(0);
-    FAN.speed2.writeSync(0);
-    FAN.speed3.writeSync(1);
+    this.speed1.writeSync(0);
+    this.speed2.writeSync(0);
+    this.speed3.writeSync(1);
   }
 };
 

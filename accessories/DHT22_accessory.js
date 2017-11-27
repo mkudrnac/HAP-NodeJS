@@ -10,22 +10,21 @@ var DHT22_SENSOR = {
   currentTemperature: 0,
   currentHumidity: 0,
   readSensorValues: function () {
-    var readout = DHT22_SENSOR.dht.read();
-    DHT22_SENSOR.currentTemperature = readout.temperature.toFixed(2);
-    DHT22_SENSOR.currentHumidity = readout.humidity.toFixed(2);
+    var readout = this.dht.read();
+    this.currentTemperature = readout.temperature.toFixed(2);
+    this.currentHumidity = readout.humidity.toFixed(2);
   },
   getTemperature: function() {
-    var temp = DHT22_SENSOR.currentTemperature;
+    var temp = this.currentTemperature;
     console.log("Getting the current temperature:", temp);
     return temp;
   },
   getHumidity: function () {
-    var humidity = DHT22_SENSOR.currentHumidity;
+    var humidity = this.currentHumidity;
     console.log("Getting the current humidity:", humidity);
     return humidity;
   }
 };
-
 
 // Generate a consistent UUID for our Temperature Sensor Accessory that will remain the same
 // even when restarting our server. We use the `uuid.generate` helper function to create
