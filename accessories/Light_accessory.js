@@ -15,7 +15,7 @@ var LightController = {
   relayPin: new Gpio(4, 'out'),   //relay pin
   setPower: function(status) {
     console.log("Turning the '%s' %s", this.name, status ? "on" : "off");
-    this.relayPin.writeSync(status);
+    this.relayPin.writeSync(status ? 1 : 0);
     this.power = status;
   },
   getPower: function() {
