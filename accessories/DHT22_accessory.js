@@ -16,12 +16,12 @@ var DHT22_SENSOR = {
   },
   getTemperature: function() {
     var temp = DHT22_SENSOR.currentTemperature;
-    console.log("Getting the current temperature: ", temp);
+    console.log("Getting the current temperature:", temp);
     return temp;
   },
   getHumidity: function () {
     var humidity = DHT22_SENSOR.currentHumidity;
-    console.log("Getting the current humidity: ", humidity);
+    console.log("Getting the current humidity:", humidity);
     return humidity;
   }
 };
