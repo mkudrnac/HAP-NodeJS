@@ -12,7 +12,7 @@ var LightController = {
   model: "v1.0",                  //model (optional)
   serialNumber: "A12S345KGB",     //serial number (optional)
   power: false,                   //curent power status
-  relayPin: new Gpio(17, 'out'),  //relay pin
+  relayPin: new Gpio(4, 'out'),   //relay pin
   setPower: function(status) {
     console.log("Turning the '%s' %s", this.name, status ? "on" : "off");
     this.relayPin.writeSync(status);
