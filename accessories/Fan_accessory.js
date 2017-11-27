@@ -12,12 +12,11 @@ var FAN = {
   powerOn: false,
   rSpeed: 100,
   setPowerOn: function(on) {
-    if(on){
+    if(on) {
       //put your code here to turn on the fan
       FAN.powerOn = on;
       FAN.setSpeed(FAN.rSpeed);
-    }
-    else{
+    } else {
       //put your code here to turn off the fan
       FAN.powerOn = on;
       FAN.shutdown();
